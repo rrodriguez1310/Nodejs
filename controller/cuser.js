@@ -1,7 +1,7 @@
 'use strict'
 
 
-var bcrypt = require('bcrypt') ;
+var bcrypt = require('bcrypt-nodejs') ;
 var User = require('../models/user');
 
 
@@ -34,34 +34,38 @@ function saveUser(req, res) {
             //}
         //encripta el password
 
-   bcrypt.hash(params.password,  10, null,  function(err,hash){
+   bcrypt.hash(params.password,  null, null, function(err,hash){
         user.password=hash;
-        console.log(user.password);
-   /*     if(user.name!=null && user.surname!=null && user.email!=null){  
+        
+        if(user.name!=null && user.surname!=null && user.email!=null){  
                 //guradra el usuario
+             
                     user.save((err, userStored)=>{
                                 if(err){
+                                   
                                     res.status(500).send({message:'Error al guardar'});
                                 }else{
-
-                                    if(!userStores){
+                                    
+                                    if(!userStored){
+                                       
                                         res.status(500).send({message:'No se registro'});
                                     }else{
+                                       
                                         res.status(200).send({user:userStored});
                                        }
-
+                                      
                                          }
-                                         res.status(200).send({user:userStored});
+                                        
                         });
 
              
 
           }else{   
             res.status(200).send({message:'Por favor rellenas todos los datos.'});
-          }*/
+          }
 
         });
-        console.log("aquie entro "+ user.password);
+     
 
     } else {
         res.status(200).send({message:'Introduce el password'});
