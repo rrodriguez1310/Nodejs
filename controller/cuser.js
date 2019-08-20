@@ -3,6 +3,7 @@
 
 var bcrypt = require('bcrypt-nodejs') ;
 var User = require('../models/user');
+var jwt=require('../services/jwt.js');
 
 
 
@@ -95,7 +96,10 @@ function loginUser(req, res){
                 bcrypt.compare(password,user.password, function(err, check){
                     if(check){
                                 if(params.gethash){
-
+                                    ///comprueba si tiene tocken
+                                        res.status(200).send({
+                                            token: jwt.createToken(user)
+                                        });
                                 }else{
                                    // user.password=password;
                                     res.status(200).send({user});
