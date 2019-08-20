@@ -76,7 +76,49 @@ function saveUser(req, res) {
 }
 
 
+function loginUser(req, res){
+
+    var params=req.body;
+    var email=params.email;
+    var password=params.password;
+    User.findOne({email: email.toLowerCase()}, (err, user)=> {
+        if (err){
+            res.status(500).send({message:'error en la peticion'});
+        }else{
+            if(!user){
+               
+                res.status(404).send({message:'error en la peticion'});
+            }else{
+                //console.log("1 "+password);
+                //console.log("2 "+user.password);
+                //res.status(200).send({user});
+                bcrypt.compare(password,user.password, function(err, check){
+                    if(check){
+                                if(params.gethash){
+
+                                }else{
+                                   // user.password=password;
+                                    res.status(200).send({user});
+
+                                }
+                    }else{
+                      //  console.log("1 "+password);
+                       // console.log("2 "+user.email);
+                        res.status(404).send({message:'usuario2 o contraseña incorrecta'}); 
+                    }
+
+                });
+            }
+        }
+
+
+    });
+
+}
+
+
 module.exports = {
     pruebas, 
-    saveUser
+    saveUser,
+    loginUser
 }; 
