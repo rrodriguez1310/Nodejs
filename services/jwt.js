@@ -1,6 +1,7 @@
 'use strict' 
 var jwt= require('jwt-simple');
 var moment=requiere('moment');
+var secret='calve_secreta_curso';
 
 exports.createToken=function(user){
     var payload={
