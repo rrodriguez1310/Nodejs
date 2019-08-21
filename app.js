@@ -8,6 +8,7 @@ var app = express();
 
 //cragar rutas
 var user_routes=require('./routes/ruser');
+var artist_routes=require('./routes/rartist');
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 
 //ruta base
 app.use('/api', user_routes);
+app.use('/api', artist_routes);
 
 
 module.exports=app;
