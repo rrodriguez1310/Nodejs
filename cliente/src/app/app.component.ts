@@ -61,7 +61,7 @@ public onSubmit(){
                        // this.user = new User('','','','','','ROLE_USER','');}
                       localStorage.setItem('token',token);
                        
-                       //console.log(identity);
+                      this.user=new User('','','','','','ROLE_USE','');
                     }
                 },
                 error => {
