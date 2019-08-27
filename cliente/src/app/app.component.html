@@ -39,7 +39,7 @@
     margin: -8px;
     display: flex;
     align-items: center;
-    background-color: #1976d2;
+    background-color: #3EA040;
     color: white;
     font-weight: 600;
   }
@@ -343,7 +343,7 @@
 
   
 
-    <p>te logueaste!</p>
+    <p>Te logueaste!</p>
 
     <!--<svg id="rocket-smoke" alt="Rocket Ship Smoke" xmlns="http://www.w3.org/2000/svg" width="516.119" height="1083.632" viewBox="0 0 516.119 1083.632">
       <path id="Path_40" data-name="Path 40" d="M644.6,141S143.02,215.537,147.049,870.207s342.774,201.755,342.774,201.755S404.659,847.213,388.815,762.2c-27.116-145.51-11.551-384.124,271.9-609.1C671.15,139.365,644.6,141,644.6,141Z" transform="translate(-147.025 -140.939)" fill="#f5f5f5"/>
@@ -351,13 +351,17 @@
 
   </div>
 
-
   <div *ngIf="!identity" class="central col-lg-12">
 
     <div  class=" col-lg-6">
 
-      <h1> Login </h1>
-      <form #loginForm="ngForm" (ngSubmit)=onSubmit()> 
+      <h1 class="display-4"> Login </h1>
+      <div *ngIf=errorMessage>
+        <div class="alert alert-danger" role="alert" >
+            Los datos suministrador no son correctos.
+          </div>
+        </div> 
+      <form #loginForm="ngForm" (ngSubmit)=onSubmit() > 
         Correo electronico:<br> 
         <input type="email" #email="ngModel" [(ngModel)]="user.email" class="form-control"
         name="email" required/> 
@@ -366,13 +370,13 @@
         </span>
         <br> 
         password:<br> 
-        <input type="password" #password="ngModel" [(ngModel)]="user.password" name="password"required> 
+        <input  class="form-control" type="password" #password="ngModel" [(ngModel)]="user.password" name="password"required> 
         
         <span *ngIf="(!password.valid && password.touched)" style="color: #ed1b24">
           El password es obligatorio
         </span>
         <br><br> 
-        <input type="submit" value="Login" > 
+        <input type="submit" value="Login"  class="btn btn-primary" > 
       </form>  
       <br><br> 
 
@@ -381,14 +385,14 @@
 
     
     <div  class=" col-lg-6">
-      <h1> Registrate </h1>
-      <form>
+      <h1 class="display-4"> Registrate </h1>
+      <form > 
         Nombre:<br>
-        <input type="text" name="firstname"required><br>
+        <input type="text" class="form-control" name="firstname"required><br>
         Apellido:<br>
-        <input type="text" name="lastname" required><br>
+        <input type="text" name="lastname" class="form-control" required><br>
         Correo electronico:<br>
-        <input type="text" name="email" required><br><br> 
+        <input type="text" name="email" class="form-control" required><br><br> 
         <input type="submit" value="Registrar" class="btn btn-primary"> 
       </form>
 
