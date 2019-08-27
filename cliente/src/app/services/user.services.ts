@@ -28,27 +28,39 @@ signup(user_to_login, gethash = null):Observable<any>{
     return this._http.post(this.url+'login', params, {headers: headers});
                 
 }
-getIdentity(){
-    let identity = JSON.parse(localStorage.getItem('identity'));
+    getIdentity(){
+        let identity = localStorage.getItem('identity');
 
-    if(identity != "undefined"){
-        this.identity = identity;
-    }else{
-        this.identity = null;
+        if(identity != undefined){
+            this.identity = identity;
+        }else{
+            this.identity = null;
+        }
+ 
+        return this.identity;
     }
 
-    return this.identity;
-}
+    getToken(){
+        let token = localStorage.getItem('token');
 
-getToken(){
-    let token = localStorage.getItem('token');
+        if(token != undefined){
+            this.token = token;
+        }else{
+            this.token = null;
+        }
 
-    if(token != "undefined"){
-        this.token = token;
-    }else{
-        this.token = null;
+        return this.token;
     }
+user_register(user_to_register):Observable<any>{
 
-    return this.token;
+    let params = JSON.stringify(user_to_register);
+  
+
+    let headers = new HttpHeaders({'Content-Type':'application/json'});
+    //return {headers: headers};
+    return this._http.post(this.url+'register', params, {headers: headers});
+
+
 }
+
 } 

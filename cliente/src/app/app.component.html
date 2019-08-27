@@ -332,7 +332,7 @@
   <div *ngIf="identity" class="navigation col -lg -1">
 
 
-    <h1>{{ title }} app is running!</h1>
+    <h1>{{ title }} la aplicacion esta corriendo!!!!!</h1>
 
     <!--<svg id="rocket-smoke" alt="Rocket Ship Smoke" xmlns="http://www.w3.org/2000/svg" width="516.119" height="1083.632" viewBox="0 0 516.119 1083.632">
       <path id="Path_40" data-name="Path 40" d="M644.6,141S143.02,215.537,147.049,870.207s342.774,201.755,342.774,201.755S404.659,847.213,388.815,762.2c-27.116-145.51-11.551-384.124,271.9-609.1C671.15,139.365,644.6,141,644.6,141Z" transform="translate(-147.025 -140.939)" fill="#f5f5f5"/>
@@ -343,7 +343,11 @@
 
   
 
-    <p>Te logueaste!</p>
+    <p>Te logueaste!</p><br><br>
+    <span id="identity_name">
+			{{identity.name}}
+		</span><br><br>
+    <span class="btn btn-warning" (click)="logout()">Cerrar sesion</span>
 
     <!--<svg id="rocket-smoke" alt="Rocket Ship Smoke" xmlns="http://www.w3.org/2000/svg" width="516.119" height="1083.632" viewBox="0 0 516.119 1083.632">
       <path id="Path_40" data-name="Path 40" d="M644.6,141S143.02,215.537,147.049,870.207s342.774,201.755,342.774,201.755S404.659,847.213,388.815,762.2c-27.116-145.51-11.551-384.124,271.9-609.1C671.15,139.365,644.6,141,644.6,141Z" transform="translate(-147.025 -140.939)" fill="#f5f5f5"/>
@@ -385,18 +389,48 @@
 
     
     <div  class=" col-lg-6">
+        <div *ngIf=alertregister>
+            <div class="alert alert-primary" role="alert" >
+               {{alertregister}}
+              </div>
+            </div> 
       <h1 class="display-4"> Registrate </h1>
-      <form > 
-        Nombre:<br>
-        <input type="text" class="form-control" name="firstname"required><br>
-        Apellido:<br>
-        <input type="text" name="lastname" class="form-control" required><br>
-        Correo electronico:<br>
-        <input type="text" name="email" class="form-control" required><br><br> 
-        <input type="submit" value="Registrar" class="btn btn-primary"> 
-      </form>
-
-    </div>
+      <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()" class="col-md-10">
+        <p>
+          <label>Nombre:</label>
+          <input type="text" #name="ngModel" name="name" [(ngModel)]="user_register.name" class="form-control" required />
+          <span *ngIf="!name.valid && name.touched">
+            El nombre es obligatorio
+          </span>
+        </p>
+  
+        <p>
+          <label>Apellidos:</label>
+          <input type="text" #surname="ngModel" name="surname" [(ngModel)]="user_register.surname" class="form-control" required />
+          <span *ngIf="!surname.valid && surname.touched">
+            Los apellidos son obligatorios
+          </span>
+        </p>
+  
+        <p>
+          <label>Correo electrónico:</label>
+          <input type="email" #email="ngModel" name="email" [(ngModel)]="user_register.email" class="form-control" required />
+          <span *ngIf="!email.valid && email.touched">
+            El email es obligatorio
+          </span>
+        </p>
+  
+        <p>
+          <label>Contraseña:</label>
+          <input type="password" #password="ngModel" name="password" [(ngModel)]="user_register.password" class="form-control" required />
+          <span *ngIf="!password.valid && password.touched">
+            La contraseña es obligatoria
+          </span>
+        </p>
+  <br>
+        <input type="submit" value="Regristrarse" class="btn btn-primary" />
+  
+      </form> 
 
 
   </div>

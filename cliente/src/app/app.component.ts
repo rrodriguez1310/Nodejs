@@ -11,12 +11,14 @@ import { Observable } from 'rxjs';
   providers:[UserServices]
 })
 export class AppComponent implements OnInit{
- public  title = 'MUSIFY';
+ public  title = 'MUSIFY Coomponet ';
  public  user:User;
  public  identity;
  public token;
  public errorMessage;
  public loginForm;
+ public user_register:User;
+ public alertregister;
 
 
 
@@ -25,6 +27,7 @@ constructor(
   private _userServices:UserServices
 ){
   this.user=new User('','','','','','ROLE_USE','');
+  this.user_register=new User('','','','','','ROLE_USE','');
 }
 
 public onSubmit(){
@@ -42,6 +45,7 @@ public onSubmit(){
         }else{
             // Crear elemento en el localstorage para tener al usuario sesión
             localStorage.setItem('identity', JSON.stringify(identity));
+            
            
             // Conseguir el token para enviarselo a cada petición http
             this._userServices.signup(this.user, 'true').subscribe(
@@ -53,11 +57,11 @@ public onSubmit(){
                         alert("El token no se ha generado correctamente");
                     }else{
                         // Crear elemento en el localstorage para tener token disponible
-                        localStorage.setItem('token', token);
+                       
                        // this.user = new User('','','','','','ROLE_USER','');}
-                  
-                       console.log(token);
-                       console.log(identity);
+                      localStorage.setItem('token',token);
+                       
+                       //console.log(identity);
                     }
                 },
                 error => {
@@ -65,14 +69,13 @@ public onSubmit(){
                   var errorMessage = <any>error;
 
                   if(errorMessage != null){
-                    var body = JSON.parse(error._body);
-                    this.errorMessage = body.message;
+                    this.errorMessage=error;
 
                     console.log(error);
                   }
                 }
               );
-        }
+        }  
     },
     error => {
       var errorMessage = <any>error;
@@ -94,12 +97,59 @@ public onSubmit(){
 
 
 ngOnInit(){
-this.identity="";
-this.token="";
-  
+  this.identity = this._userServices.getIdentity();
+  this.token = this._userServices.getToken();
+
   console.log(this.identity);
   console.log(this.token);
 }
 
+
+logout(){
+  localStorage.removeItem('identity');
+  localStorage.removeItem('token');
+  localStorage.clear();
+  this.identity=null;
+  this.token=null;
+}
+
+onSubmitRegister(){
+  console.log(this.user_register);
+
+  this._userServices.user_register(this.user_register).subscribe(
+    response=>{
+      let user=response.user;
+      this.user_register=user
+      if(!user){
+         this. alertregister='Error al incluir al usuario';
+      }else{
+
+        this. alertregister='Excelente '+this.user_register.name+' se registro correctamente.';
+
+        this.user_register=new User('','','','','','ROLE_USE','');
+      
+      }
+
+
+
+    },
+    error => {
+      var errorMessage = <any>error;
+
+      if(errorMessage != null){
+        this.alertregister=error;
+      
+
+        //var body = JSON.parse(error._body);
+       //this.errorMessage = body.message;
+       //let iden="true";
+
+      //  console.log(errorMessage);
+      }
+    }
+
+
+  );
+}
 
 }
